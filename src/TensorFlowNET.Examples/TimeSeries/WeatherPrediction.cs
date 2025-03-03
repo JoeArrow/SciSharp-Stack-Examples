@@ -16,6 +16,8 @@ public class WeatherPrediction : SciSharpExample, IExample
     ITimeSeriesTask task;
     IDatasetV2 training_ds, val_ds, test_ds;
 
+    // ----------------------------------------------------
+
     public ExampleConfig InitConfig()
         => Config = new ExampleConfig
         {

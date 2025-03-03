@@ -30,6 +30,8 @@ namespace TensorFlowNET.Examples
 {
     class Program
     {
+        private static string cr = Environment.NewLine;
+
         static void Main(string[] args)
         {
             var parsedArgs = ParseArgs(args);
@@ -49,13 +51,13 @@ namespace TensorFlowNET.Examples
             Console.WriteLine($"TensorFlow.Keras v{Assembly.GetAssembly(typeof(KerasApi)).GetName().Version}", Color.Yellow);
             Console.WriteLine(Environment.CurrentDirectory, Color.Yellow);
 
-            int finished = 0;
+            var finished = 0;
             var errors = new List<string>();
             var success = new List<string>();
 
             var sw = new Stopwatch();
 
-            for (var i = 0; i < examples.Length; i++)
+            for(var i = 0; i < examples.Length; i++)
             {
                 var (isSuccess, name) = (true, "");
 
@@ -66,7 +68,11 @@ namespace TensorFlowNET.Examples
                 if(isSuccess)
                 {
                     success.Add($"Example: {name} in {sw.Elapsed.TotalSeconds}s");
-                    // only successfully run examples could be sorted as finished
+
+                    // ------------------------------
+                    // only successfully run examples
+                    // could be sorted as finished
+
                     finished++;
                 }
                 else
@@ -77,7 +83,7 @@ namespace TensorFlowNET.Examples
                 keras.backend.clear_session();
             }
 
-            if (parsedArgs.ContainsKey("ex"))
+            if(parsedArgs.ContainsKey("ex"))
             {
                 printRunInfo(finished, examples.Length);
                 return;
@@ -99,8 +105,8 @@ namespace TensorFlowNET.Examples
             Console.WriteLine($"TensorFlow Binary v{tf.VERSION}");
             Console.WriteLine($"TensorFlow.NET v{Assembly.GetAssembly(typeof(TF_DataType)).GetName().Version}");
             Console.WriteLine($"TensorFlow.Keras v{Assembly.GetAssembly(typeof(KerasApi)).GetName().Version}");
-            Console.WriteLine($"{finished} of {examplesLength} example(s) are completed.");
-            Console.WriteLine($"Press Any Key to finishe...");
+            Console.WriteLine($"{finished} of {examplesLength} example(s) are completed.{cr}");
+            Console.WriteLine($"Press Enter to finish...{cr}");
             Console.ReadLine();
         }
 
@@ -108,7 +114,6 @@ namespace TensorFlowNET.Examples
 
         private static (bool, string) RunExamples(Type example, Dictionary<string, string> args)
         {
-            var cr = Environment.NewLine;
             var instance = (IExample)Activator.CreateInstance(example);
             instance.InitConfig();
 
@@ -135,7 +140,7 @@ namespace TensorFlowNET.Examples
             {
                 ret = instance.Run();
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 Console.WriteLine(ex);
             }
@@ -150,11 +155,11 @@ namespace TensorFlowNET.Examples
         {
             var parsed = new Dictionary<string, string>();
 
-            for (int i = 0; i < args.Length; i++)
+            for(int i = 0; i < args.Length; i++)
             {
                 string key = args[i].Substring(1);
 
-                switch (key)
+                switch(key)
                 {
                     case "ex":
                         parsed.Add(key, args[++i]);
