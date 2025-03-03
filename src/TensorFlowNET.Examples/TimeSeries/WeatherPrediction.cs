@@ -30,17 +30,22 @@ public class WeatherPrediction : SciSharpExample, IExample
     public bool Run()
     {
         var wizard = new ModelWizard();
+        
+        // --------------------------
         // Change to RnnModel for RNN
+
         task = wizard.AddTimeSeriesTask<RnnModel>(new TaskOptions
         {
             WeightsPath = @"timeseries_linear_v1\saved_weights.h5"
         });
+
         task.SetModelArgs(new TimeSeriesModelArgs
         {
             InputWidth = 3,
             LabelWidth = 1,
             LabelColumns = new[] { "T (degC)" }
         });
+
         (training_ds, val_ds, test_ds) = task.GenerateDataset(PrepareData);
 
         Train();
