@@ -9,6 +9,7 @@ namespace SharpCV.Exmaples
             var vid = cv2.VideoCapture(0);
 
             var (loaded, frame) = vid.read();
+
             while (loaded)
             {
                 cv2.imshow("result", frame);

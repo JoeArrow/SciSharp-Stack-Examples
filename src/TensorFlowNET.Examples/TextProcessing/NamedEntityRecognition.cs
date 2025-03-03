@@ -7,13 +7,12 @@ namespace TensorFlowNET.Examples;
 /// </summary>
 public class NamedEntityRecognition : SciSharpExample, IExample
 {
-    public ExampleConfig InitConfig()
-        => Config = new ExampleConfig
-        {
-            Name = "NER",
-            Enabled = false,
-            IsImportingGraph = false
-        };
+    public ExampleConfig InitConfig() => Config = new ExampleConfig
+    {
+        Name = "NER",
+        Enabled = false,
+        IsImportingGraph = false
+    };
 
     public bool Run()
     {

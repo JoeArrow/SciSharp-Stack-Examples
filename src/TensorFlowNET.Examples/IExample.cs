@@ -22,6 +22,7 @@ namespace TensorFlowNET.Examples
     /// Interface of Example project
     /// Each example should implement IExample so the entry program will find it.
     /// </summary>
+    
     public interface IExample
     {
         ExampleConfig Config { get; set; }
@@ -34,6 +35,7 @@ namespace TensorFlowNET.Examples
         /// Build dataflow graph, train and predict
         /// </summary>
         /// <returns></returns>
+        
         void Train();
         string FreezeModel();
         void Test();
@@ -47,6 +49,7 @@ namespace TensorFlowNET.Examples
         /// <summary>
         /// Prepare dataset
         /// </summary>
+        
         void PrepareData();
     }
 }

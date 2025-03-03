@@ -15,12 +15,12 @@
 ******************************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
+using System.Drawing;
 using System.Reflection;
-using System.Xml.Linq;
+using System.Diagnostics;
+using System.Collections.Generic;
+
 using Tensorflow;
 using static Tensorflow.Binding;
 using static Tensorflow.KerasApi;
@@ -58,19 +58,21 @@ namespace TensorFlowNET.Examples
             for (var i = 0; i < examples.Length; i++)
             {
                 var (isSuccess, name) = (true, "");
+
                 sw.Restart();
                 (isSuccess, name) = RunExamples(examples[i], parsedArgs);
                 sw.Stop();
 
-                if (isSuccess)
+                if(isSuccess)
                 {
                     success.Add($"Example: {name} in {sw.Elapsed.TotalSeconds}s");
                     // only successfully run examples could be sorted as finished
                     finished++;
                 }
                 else
+                {
                     errors.Add($"Example: {name} in {sw.Elapsed.TotalSeconds}s");
-
+                }
 
                 keras.backend.clear_session();
             }
@@ -86,6 +88,9 @@ namespace TensorFlowNET.Examples
 
             printRunInfo(finished, examples.Length);
         }
+
+        // ------------------------------------------------
+
         private static void printRunInfo(int finished, int examplesLength)
         {
             Console.WriteLine(Environment.OSVersion, Color.Yellow);
@@ -95,25 +100,37 @@ namespace TensorFlowNET.Examples
             Console.WriteLine($"TensorFlow.NET v{Assembly.GetAssembly(typeof(TF_DataType)).GetName().Version}");
             Console.WriteLine($"TensorFlow.Keras v{Assembly.GetAssembly(typeof(KerasApi)).GetName().Version}");
             Console.WriteLine($"{finished} of {examplesLength} example(s) are completed.");
+            Console.WriteLine($"Press Any Key to finishe...");
             Console.ReadLine();
         }
+
+        // ------------------------------------------------
+
         private static (bool, string) RunExamples(Type example, Dictionary<string, string> args)
         {
+            var cr = Environment.NewLine;
             var instance = (IExample)Activator.CreateInstance(example);
             instance.InitConfig();
 
             var name = instance.Config.Name;
 
+            // ----------------------------------------
             // args has "ex" means run specific example
-            if (args.ContainsKey("ex") && name != args["ex"])
+
+            if(args.ContainsKey("ex") && name != args["ex"])
+            {
                 return (false, "");
+            }
 
-            Console.WriteLine($"{DateTime.UtcNow} Starting {name}", Color.White);
+            Console.WriteLine($"{DateTime.UtcNow} Starting {name}{cr}", Color.LightGreen);
 
-            if (!instance.Config.Enabled)
+            if(!instance.Config.Enabled)
+            {
                 return (true, name);
+            }
 
             bool ret = false;
+
             try
             {
                 ret = instance.Run();
@@ -123,9 +140,11 @@ namespace TensorFlowNET.Examples
                 Console.WriteLine(ex);
             }
 
-            Console.WriteLine($"{DateTime.UtcNow} Completed {name}", Color.White);
+            Console.WriteLine($"{cr}{DateTime.UtcNow} Completed {name}{cr}", Color.Pink);
             return (ret, name);
         }
+
+        // ------------------------------------------------
 
         private static Dictionary<string, string> ParseArgs(string[] args)
         {
@@ -134,11 +153,13 @@ namespace TensorFlowNET.Examples
             for (int i = 0; i < args.Length; i++)
             {
                 string key = args[i].Substring(1);
+
                 switch (key)
                 {
                     case "ex":
                         parsed.Add(key, args[++i]);
                         break;
+
                     default:
                         break;
                 }

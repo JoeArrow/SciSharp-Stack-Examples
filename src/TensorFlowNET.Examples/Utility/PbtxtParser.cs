@@ -25,10 +25,15 @@ namespace TensorFlowNET.Examples.Utility
         public int id { get; set; }
         public string display_name { get; set; }
     }
+
+    // ------------------------------------------------
+
     public class PbtxtItems
     {
         public List<PbtxtItem> items { get; set; }
     }
+
+    // ------------------------------------------------
 
     public class PbtxtParser
     {
@@ -64,7 +69,6 @@ namespace TensorFlowNET.Examples.Utility
 
                         newText += newline;
                     }
-
                 }
 
                 newText = newText.Remove(newText.Length - 1);

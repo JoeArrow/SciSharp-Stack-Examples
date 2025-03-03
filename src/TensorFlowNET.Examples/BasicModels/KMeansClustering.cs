@@ -14,11 +14,12 @@
    limitations under the License.
 ******************************************************************************/
 
+using System;
 using System.Diagnostics;
+
 using Tensorflow;
 using Tensorflow.NumPy;
 using static Tensorflow.Binding;
-using System;
 
 namespace TensorFlowNET.Examples
 {
@@ -27,20 +28,28 @@ namespace TensorFlowNET.Examples
     /// handwritten digit images.
     /// https://github.com/aymericdamien/TensorFlow-Examples/blob/master/examples/2_BasicModels/kmeans.py
     /// </summary>
+
     public class KMeansClustering : SciSharpExample, IExample
     {
+        public int? test_size = null;
         public int? train_size = null;
         public int validation_size = 5000;
-        public int? test_size = null;
-        public int batch_size = 1024; // The number of samples per batch
+        
+        // -------------------------------
+        // The number of samples per batch
+
+        public int batch_size = 1024; 
 
         Datasets<MnistDataSet> mnist;
         NDArray full_data_x;
-        int num_steps = 20; // Total steps to train
-        int k = 25; // The number of clusters
+
+        int k = 25;           // The number of clusters
+        int num_steps = 20;   // Total steps to train
         int num_classes = 10; // The 10 digits
 
         float accuray_test = 0f;
+
+        // ------------------------------------------------
 
         public ExampleConfig InitConfig()
             => Config = new ExampleConfig
@@ -49,6 +58,8 @@ namespace TensorFlowNET.Examples
                 Enabled = false,
                 IsImportingGraph = true
             };
+
+        // ------------------------------------------------
 
         public bool Run()
         {
@@ -62,28 +73,34 @@ namespace TensorFlowNET.Examples
             return accuray_test > 0.70;
         }
 
+        // ------------------------------------------------
+
         public override void PrepareData()
         {
             var loader = new MnistModelLoader();
 
             var setting = new ModelLoadSetting
             {
-                TrainDir = ".resources/mnist",
                 OneHot = true,
-                TrainSize = train_size,
-                ValidationSize = validation_size,
                 TestSize = test_size,
-                ShowProgressInConsole = true
+                TrainSize = train_size,
+                ShowProgressInConsole = true,
+                TrainDir = ".resources/mnist",
+                ValidationSize = validation_size,
             };
 
             mnist = loader.LoadAsync(setting).Result;
 
             full_data_x = mnist.Train.Data;
 
+            // ------------------------
             // download graph meta data
+
             string url = "https://raw.githubusercontent.com/SciSharp/TensorFlow.NET/master/graph/kmeans.meta";
             loader.DownloadAsync(url, ".resources/graph", "kmeans.meta").Wait();
         }
+
+        // ------------------------------------------------
 
         public override Graph ImportGraph()
         {
@@ -94,20 +111,19 @@ namespace TensorFlowNET.Examples
             return graph;
         }
 
+        // ------------------------------------------------
+
         public void Train(Session sess)
         {
             var graph = tf.Graph();
 
             // Input images
+            
             Tensor X = graph.get_operation_by_name("Placeholder"); // tf.placeholder(tf.float32, shape: new TensorShape(-1, num_features));
+            
             //  Labels (for assigning a label to a centroid and testing)
+
             Tensor Y = graph.get_operation_by_name("Placeholder_1"); // tf.placeholder(tf.float32, shape: new TensorShape(-1, num_classes));
-
-            // K-Means Parameters
-            //var kmeans = new KMeans(X, k, distance_metric: KMeans.COSINE_DISTANCE, use_mini_batch: true);
-
-            // Build KMeans graph
-            //var training_graph = kmeans.training_graph();
 
             var init_vars = tf.global_variables_initializer();
             Tensor init_op = graph.get_operation_by_name("cond/Merge");
@@ -119,7 +135,9 @@ namespace TensorFlowNET.Examples
             sess.run(init_vars, new FeedItem(X, full_data_x));
             sess.run(init_op, new FeedItem(X, full_data_x));
 
+            // --------
             // Training
+
             var sw = new Stopwatch();
 
             foreach (var i in range(1, num_steps + 1))
@@ -128,45 +146,56 @@ namespace TensorFlowNET.Examples
                 result = sess.run(new ITensorOrOperation[] { train_op, avg_distance, cluster_idx }, new FeedItem(X, full_data_x));
                 sw.Stop();
 
-                if (i % 4 == 0 || i == 1)
+                if(i % 4 == 0 || i == 1)
+                {
                     print($"Step {i}, Avg Distance: {result[1]} Elapse: {sw.ElapsedMilliseconds}ms");
+                }
             }
 
             var idx = result[2].ToArray<int>();
 
+            // -------------------------------
             // Assign a label to each centroid
             // Count total number of labels per centroid, using the label of each training
             // sample to their closest centroid (given by 'idx')
+            
             var counts = np.zeros((k, num_classes), np.float32);
 
             sw.Start();
+
             foreach (var i in range(idx.Length))
             {
                 var x = mnist.Train.Labels[i];
-                // counts[idx[i]] += x;
                 throw new NotImplementedException("");
             }
 
             sw.Stop();
             print($"Assign a label to each centroid took {sw.ElapsedMilliseconds}ms");
 
+            // ----------------------------------------------
             // Assign the most frequent label to the centroid
+
             var labels_map_array = np.argmax(counts, 1);
             var labels_map = tf.convert_to_tensor(labels_map_array);
 
+            // --------------
             // Evaluation ops
             // Lookup: centroid_id -> label
+
             var cluster_label = tf.nn.embedding_lookup(labels_map, cluster_idx);
 
+            // ----------------
             // Compute accuracy
+
             var correct_prediction = tf.equal(cluster_label, tf.cast(tf.math.argmax(Y, 1), tf.int32));
             var cast = tf.cast(correct_prediction, tf.float32);
             var accuracy_op = tf.reduce_mean(cast);
 
+            // ----------
             // Test Model
+
             var (test_x, test_y) = (mnist.Test.Data, mnist.Test.Labels);
-            // result = sess.run(accuracy_op, new FeedItem(X, test_x), new FeedItem(Y, test_y));
-            // accuray_test = result;
+
             print($"Test Accuracy: {accuray_test}");
         }
     }
