@@ -5,6 +5,7 @@ using PandasNet;
 using Tensorflow;
 using SciSharp.Models;
 using SciSharp.Models.TimeSeries;
+
 using static Tensorflow.Binding;
 using static Tensorflow.KerasApi;
 using static PandasNet.PandasApi;
@@ -18,12 +19,11 @@ public class WeatherPrediction : SciSharpExample, IExample
 
     // ----------------------------------------------------
 
-    public ExampleConfig InitConfig()
-        => Config = new ExampleConfig
-        {
-            Name = "Weather Prediction",
-            Enabled = true
-        };
+    public ExampleConfig InitConfig() => Config = new ExampleConfig
+    {
+        Name = "Weather Prediction",
+        Enabled = true
+    };
 
     // ----------------------------------------------------
 
@@ -49,8 +49,6 @@ public class WeatherPrediction : SciSharpExample, IExample
         (training_ds, val_ds, test_ds) = task.GenerateDataset(PrepareData);
 
         Train();
-        //Test();
-        //Predict();
 
         return true;
     }
