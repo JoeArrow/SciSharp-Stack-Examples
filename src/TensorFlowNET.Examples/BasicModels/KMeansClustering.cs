@@ -23,10 +23,11 @@ using static Tensorflow.Binding;
 
 namespace TensorFlowNET.Examples
 {
+    /// ---------------------------------------------------
     /// <summary>
-    /// Implement K-Means algorithm with TensorFlow.NET, and apply it to classify
-    /// handwritten digit images.
-    /// https://github.com/aymericdamien/TensorFlow-Examples/blob/master/examples/2_BasicModels/kmeans.py
+    ///     Implement K-Means algorithm with TensorFlow.NET, 
+    ///     and apply it to classify handwritten digit images.
+    ///     https://github.com/aymericdamien/TensorFlow-Examples/blob/master/examples/2_BasicModels/kmeans.py
     /// </summary>
 
     public class KMeansClustering : SciSharpExample, IExample
@@ -51,13 +52,12 @@ namespace TensorFlowNET.Examples
 
         // ------------------------------------------------
 
-        public ExampleConfig InitConfig()
-            => Config = new ExampleConfig
-            {
-                Name = "K-means Clustering",
-                Enabled = false,
-                IsImportingGraph = true
-            };
+        public ExampleConfig InitConfig() => Config = new ExampleConfig
+        {
+            Enabled = false,
+            IsImportingGraph = true,
+            Name = "K-means Clustering",
+        };
 
         // ------------------------------------------------
 
@@ -65,6 +65,7 @@ namespace TensorFlowNET.Examples
         {
             PrepareData();
             var graph = ImportGraph();
+
             using (var sess = tf.Session(graph))
             {
                 Train(sess);
@@ -117,13 +118,15 @@ namespace TensorFlowNET.Examples
         {
             var graph = tf.Graph();
 
+            // ------------
             // Input images
             
-            Tensor X = graph.get_operation_by_name("Placeholder"); // tf.placeholder(tf.float32, shape: new TensorShape(-1, num_features));
+            Tensor X = graph.get_operation_by_name("Placeholder");
             
-            //  Labels (for assigning a label to a centroid and testing)
+            // --------------------------------------------------------
+            // Labels (for assigning a label to a centroid and testing)
 
-            Tensor Y = graph.get_operation_by_name("Placeholder_1"); // tf.placeholder(tf.float32, shape: new TensorShape(-1, num_classes));
+            Tensor Y = graph.get_operation_by_name("Placeholder_1");
 
             var init_vars = tf.global_variables_initializer();
             Tensor init_op = graph.get_operation_by_name("cond/Merge");

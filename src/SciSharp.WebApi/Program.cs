@@ -2,18 +2,25 @@ using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ------------------------------
 // Add services to the container.
 // Build a new neural network on startup, including training
+
 builder.Services.AddSingleton<ImageClassificationService>();
 
 builder.Services.AddControllers();
+
+// -------------------------------------------------------------------------------------
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// ------------------------------------
 // Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

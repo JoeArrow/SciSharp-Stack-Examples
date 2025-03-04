@@ -5,18 +5,22 @@ using static Tensorflow.Binding;
 namespace TensorFlowNET.Examples;
 
 /// <summary>
-/// Basic introduction to TensorFlow's Eager API.
-/// https://github.com/aymericdamien/TensorFlow-Examples/blob/master/examples/1_Introduction/basic_eager_api.py
+///     Basic introduction to TensorFlow's Eager API.
+///     https://github.com/aymericdamien/TensorFlow-Examples/blob/master/examples/1_Introduction/basic_eager_api.py
 /// </summary>
+
 public class BasicEagerApi : SciSharpExample, IExample
 {
     private Tensor a, b, c, d;
 
-    public ExampleConfig InitConfig()
-        => Config = new ExampleConfig
-        {
-            Name = "Basic Eager"
-        };
+    // ----------------------------------------------------
+
+    public ExampleConfig InitConfig() => Config = new ExampleConfig
+    {
+        Name = "Basic Eager"
+    };
+
+    // ----------------------------------------------------
 
     public bool Run()
     {

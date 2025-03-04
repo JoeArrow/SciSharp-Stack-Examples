@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SciSharp.WebApi", "src\SciS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharpCV.Examples", "src\SharpCV.Examples\SharpCV.Examples.csproj", "{B259A1AD-B73D-45FF-887D-658C1DFF615A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TensorFlowNET_Tests", "TensorFlowNET_Tests\TensorFlowNET_Tests.csproj", "{53C75DDD-7287-4E76-9842-22548F83AF71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,24 @@ Global
 		{B259A1AD-B73D-45FF-887D-658C1DFF615A}.Release|x64.Build.0 = Release|Any CPU
 		{B259A1AD-B73D-45FF-887D-658C1DFF615A}.Release|x86.ActiveCfg = Release|Any CPU
 		{B259A1AD-B73D-45FF-887D-658C1DFF615A}.Release|x86.Build.0 = Release|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Debug|x64.Build.0 = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Debug|x86.Build.0 = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.GPU|Any CPU.ActiveCfg = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.GPU|Any CPU.Build.0 = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.GPU|x64.ActiveCfg = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.GPU|x64.Build.0 = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.GPU|x86.ActiveCfg = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.GPU|x86.Build.0 = Debug|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Release|x64.ActiveCfg = Release|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Release|x64.Build.0 = Release|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Release|x86.ActiveCfg = Release|Any CPU
+		{53C75DDD-7287-4E76-9842-22548F83AF71}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

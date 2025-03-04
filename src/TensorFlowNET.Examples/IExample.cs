@@ -43,7 +43,6 @@ namespace TensorFlowNET.Examples
         void Predict();
 
         Graph ImportGraph();
-
         Graph BuildGraph();
 
         /// <summary>
