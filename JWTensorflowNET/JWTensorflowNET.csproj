@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="AudioProcessing\" />
+    <Folder Include="BasicModels\" />
+    <Folder Include="Converting\" />
+    <Folder Include="GAN\" />
+    <Folder Include="ImageProcessing\" />
+    <Folder Include="NaturalLanguageProcessing\" />
+    <Folder Include="NeuralNetworks\" />
+    <Folder Include="Utility\" />
+    <Folder Include="TimeSeries\" />
+    <Folder Include="TextProcessing\" />
+    <Folder Include="ReqResp\" />
+    <Folder Include="ObjectDetection\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.10.0.20241108" />
+    <PackageReference Include="SciSharp.Models.ImageClassification" Version="0.9.0" />
+    <PackageReference Include="SciSharp.Models.ObjectDetection" Version="0.9.0" />
+    <PackageReference Include="SciSharp.Models.TimeSeries" Version="0.9.0" />
+    <PackageReference Include="SciSharp.TensorFlow.Redist" Version="2.16.0" />
+    <PackageReference Include="TensorFlow.Keras" Version="0.15.0" />
+  </ItemGroup>
+
+</Project>

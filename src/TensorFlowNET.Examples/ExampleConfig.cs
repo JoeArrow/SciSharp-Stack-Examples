@@ -3,7 +3,7 @@
 public class ExampleConfig
 {
     /// <summary>
-    /// Example name
+    ///     Example name
     /// </summary>
     
     public string Name { get; set; }
