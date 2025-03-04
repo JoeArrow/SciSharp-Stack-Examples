@@ -33,7 +33,7 @@ using static Tensorflow.Binding;
 namespace TensorFlowNET.Examples;
 
 /// <summary>
-/// Convolutional Neural Network classifier for Local Classify Images.
+/// Convolutional Neural Network (CNN) classifier for Local Classify Images.
 /// CNN architecture with two convolutional layers, followed by two fully-connected layers at the end.
 /// Use Stochastic Gradient Descent (SGD) optimizer. 
 /// Learning Rate reduces per 10 epochs.
@@ -42,49 +42,64 @@ namespace TensorFlowNET.Examples;
 /// </summary>
 class CnnInYourOwnData : SciSharpExample, IExample
 {
-    string[] ArrayFileName_Train, ArrayFileName_Validation, ArrayFileName_Test;
-    long[] ArrayLabel_Train, ArrayLabel_Validation, ArrayLabel_Test;
     Dictionary<long, string> Dict_Label;
+    long[] ArrayLabel_Train, ArrayLabel_Validation, ArrayLabel_Test;
+    string[] ArrayFileName_Train, ArrayFileName_Validation, ArrayFileName_Test;
+
     NDArray y_train;
-    NDArray x_valid, y_valid;
     NDArray x_test, y_test;
-    int img_h = 64;// MNIST images are 64x64
-    int img_w = 64;// MNIST images are 64x64
+    NDArray x_valid, y_valid;
+
+    int img_h = 64;         // MNIST images are 64x64
+    int img_w = 64;         // MNIST images are 64x64
+    
     int img_mean = 0;
     int img_std = 255;
-    int n_channels = 1;//Gray Image ,one channel
-    int n_classes;// Number of classes
 
-    Tensor x, y; // Placeholders for inputs (x) and outputs(y)
-    Tensor loss, accuracy, cls_prediction, prob;
+    int n_classes;          // Number of classes
+    int n_channels = 1;     //Gray Image ,one channel
+
+    Tensor x, y;            // Placeholders for inputs (x) and outputs(y)
+    Tensor loss;
+    Tensor prob;
+    Tensor accuracy;
     Tensor optimizer;
     Tensor normalized;
     Tensor decodeJpeg;
+    Tensor cls_prediction;
 
     int display_freq = 2;
     float accuracy_test = 0f;
     float loss_test = 1f;
 
+    // ---------------------
     // Network configuration
     // 1st Convolutional Layer
-    int filter_size1 = 5;  // Convolution filters are 5 x 5 pixels.
-    int num_filters1 = 16; //  There are 16 of these filters.
-    int stride1 = 1;  // The stride of the sliding window
 
+    int stride1 = 1;        // The stride of the sliding window
+    int filter_size1 = 5;   // Convolution filters are 5 x 5 pixels.
+    int num_filters1 = 16;  //  There are 16 of these filters.
+
+    // -----------------------
     // 2nd Convolutional Layer
-    int filter_size2 = 5; // Convolution filters are 5 x 5 pixels.
-    int num_filters2 = 32;// There are 32 of these filters.
-    int stride2 = 1;  // The stride of the sliding window
 
+    int stride2 = 1;        // The stride of the sliding window
+    int filter_size2 = 5;   // Convolution filters are 5 x 5 pixels.
+    int num_filters2 = 32;  // There are 32 of these filters.
+
+    // ----------------------
     // Fully-connected layer.
-    int h1 = 128; // Number of neurons in fully-connected layer.
 
+    int h1 = 128;           // Number of neurons in fully-connected layer.
+
+    // ----------------
     // Hyper-parameters 
-    int epochs = 5; // accuracy > 98%
+
+    int epochs = 5;         // accuracy > 98%
     int batch_size = 100;
-    float learning_rate_base = 0.001f;
-    float learning_rate_decay = 0.1f;
     uint learning_rate_step = 2;
+    float learning_rate_decay = 0.1f;
+    float learning_rate_base = 0.001f;
     float learning_rate_min = 0.000001f;
 
     NDArray Test_Cls, Test_Data;
@@ -97,15 +112,19 @@ class CnnInYourOwnData : SciSharpExample, IExample
 
     string path_model;
     int TrainQueueCapa = 3;
+
     Session sess;
 
-    public ExampleConfig InitConfig()
-        => Config = new ExampleConfig
-        {
-            Name = "CNN in Your Own Data (Graph)",
-            Enabled = true,
-            IsImportingGraph = false
-        };
+    // ----------------------------------------------------
+
+    public ExampleConfig InitConfig() => Config = new ExampleConfig
+    {
+        Name = "CNN in Your Own Data (Graph)",
+        Enabled = true,
+        IsImportingGraph = false
+    };
+
+    // ----------------------------------------------------
 
     public bool Run()
     {
@@ -126,6 +145,8 @@ class CnnInYourOwnData : SciSharpExample, IExample
         return accuracy_test > 0.98;
     }
 
+    // ----------------------------------------------------
+
     public void LoadAndPredict()
     {
         var graph = tf.Graph().as_default();
@@ -139,6 +160,8 @@ class CnnInYourOwnData : SciSharpExample, IExample
         print($"Prediction result: {prediction_result}");
     }
 
+    // ----------------------------------------------------
+
     public override string FreezeModel()
     {
         return tf.train.freeze_graph(Config.Name + "\\MODEL", "model", new[]
@@ -147,6 +170,8 @@ class CnnInYourOwnData : SciSharpExample, IExample
             "Train/Prediction/prob"
         });
     }
+
+    // ----------------------------------------------------
 
     #region PrepareData
     public override void PrepareData()
@@ -174,9 +199,11 @@ class CnnInYourOwnData : SciSharpExample, IExample
 
         LoadImagesToNDArray();
     }
+    
     /// <summary>
     /// Load Validation and Test data to NDarray, Train data is too large ,we load by training process 
     /// </summary>
+    
     private void LoadImagesToNDArray()
     {
         //Load labels
@@ -617,17 +644,20 @@ class CnnInYourOwnData : SciSharpExample, IExample
         (Test_Cls, Test_Data) = sess.run((cls_prediction, prob), (x, x_test));
     }
 
+    // ----------------------------------------------------
+
     void TestDataOutput()
     {
         for (int i = 0; i < ArrayLabel_Test.Length; i++)
         {
-            long real = ArrayLabel_Test[i];
             int predict = Test_Cls[i];
-            var probability = Test_Data[i, predict];
-            string result = (real == predict) ? "OK" : "FAILED";
-            string fileName = ArrayFileName_Test[i];
+            long real = ArrayLabel_Test[i];
             string real_str = Dict_Label[real];
+            string fileName = ArrayFileName_Test[i];
+            var probability = Test_Data[i, predict];
             string predict_str = Dict_Label[predict];
+            string result = (real == predict) ? "OK" : "FAILED";
+            
             if (result != "OK")
             {
                 print((i + 1).ToString() + "|" + "result:" + result + "|" + "real_str:" + real_str + "|"
