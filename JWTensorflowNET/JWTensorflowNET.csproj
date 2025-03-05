@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Converting\" />
     <Folder Include="GAN\" />
     <Folder Include="ImageProcessing\" />
     <Folder Include="NaturalLanguageProcessing\" />
