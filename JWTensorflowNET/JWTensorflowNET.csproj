@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="GAN\" />
     <Folder Include="ImageProcessing\" />
     <Folder Include="NaturalLanguageProcessing\" />
     <Folder Include="NeuralNetworks\" />
@@ -24,6 +23,7 @@
     <PackageReference Include="SciSharp.Models.ObjectDetection" Version="0.9.0" />
     <PackageReference Include="SciSharp.Models.TimeSeries" Version="0.9.0" />
     <PackageReference Include="SciSharp.TensorFlow.Redist" Version="2.16.0" />
+    <PackageReference Include="System.Drawing.Common" Version="9.0.2" />
     <PackageReference Include="TensorFlow.Keras" Version="0.15.0" />
   </ItemGroup>
 
