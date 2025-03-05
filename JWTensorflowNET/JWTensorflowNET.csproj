@@ -15,7 +15,6 @@
     <Folder Include="Utility\" />
     <Folder Include="TimeSeries\" />
     <Folder Include="TextProcessing\" />
-    <Folder Include="ReqResp\" />
     <Folder Include="ObjectDetection\" />
   </ItemGroup>
 

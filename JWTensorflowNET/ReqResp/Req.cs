@@ -9,9 +9,14 @@
 using System.Linq;
 using System.Collections.Generic;
 
-namespace TensorFlowNET.Examples.ReqResp
+namespace JWTensorflowNET.ReqResp
 {
-    public class Run_Req : IReq
+    // ----------------------------------------------------
+    /// <summary>
+    ///     Req Description
+    /// </summary>
+
+    public class Req : IReq
     {
         private List<(string, int)> _properties = new List<(string, int)>();
 
@@ -35,7 +40,7 @@ namespace TensorFlowNET.Examples.ReqResp
             }
             else
             {
-                _properties.Add((key, (int)(object)val));   
+                _properties.Add((key, (int)(object)val));
             }
         }
     }

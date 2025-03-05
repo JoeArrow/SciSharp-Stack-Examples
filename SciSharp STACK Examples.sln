@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TensorFlowNET_Tests", "Tens
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWTensorflowNET", "JWTensorflowNET\JWTensorflowNET.csproj", "{43DDA170-64A9-4BC0-BE15-57700E25F333}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWTensorflowNET_Tests", "JWTensorflowNET_Tests\JWTensorflowNET_Tests.csproj", "{79962B80-5F3A-4169-B22A-066F84A06334}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -116,6 +118,24 @@ Global
 		{43DDA170-64A9-4BC0-BE15-57700E25F333}.Release|x64.Build.0 = Release|Any CPU
 		{43DDA170-64A9-4BC0-BE15-57700E25F333}.Release|x86.ActiveCfg = Release|Any CPU
 		{43DDA170-64A9-4BC0-BE15-57700E25F333}.Release|x86.Build.0 = Release|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Debug|x64.Build.0 = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Debug|x86.Build.0 = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.GPU|Any CPU.ActiveCfg = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.GPU|Any CPU.Build.0 = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.GPU|x64.ActiveCfg = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.GPU|x64.Build.0 = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.GPU|x86.ActiveCfg = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.GPU|x86.Build.0 = Debug|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Release|x64.ActiveCfg = Release|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Release|x64.Build.0 = Release|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Release|x86.ActiveCfg = Release|Any CPU
+		{79962B80-5F3A-4169-B22A-066F84A06334}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="MSTest" Version="3.6.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JWTensorflowNET\JWTensorflowNET.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="BasicModels\" />
+    <Folder Include="Converting\" />
+    <Folder Include="GAN\" />
+    <Folder Include="ImageProcessing\" />
+    <Folder Include="NaturalLanguageProcessing\" />
+    <Folder Include="NeuralNetworks\" />
+    <Folder Include="Utility\" />
+    <Folder Include="TimeSeries\" />
+    <Folder Include="TextProcessing\" />
+    <Folder Include="ObjectDetection\" />
+  </ItemGroup>
+
+</Project>
