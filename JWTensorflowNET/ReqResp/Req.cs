@@ -6,9 +6,6 @@
 //
 #endregion
 
-using System.Linq;
-using System.Collections.Generic;
-
 namespace JWTensorflowNET.ReqResp
 {
     // ----------------------------------------------------
@@ -18,7 +15,7 @@ namespace JWTensorflowNET.ReqResp
 
     public class Req : IReq
     {
-        private List<(string, int)> _properties = new List<(string, int)>();
+        private List<(string, object)> _properties = new();
 
         // ------------------------------------------------
 
@@ -36,11 +33,11 @@ namespace JWTensorflowNET.ReqResp
 
             if(index != -1)
             {
-                _properties[index] = (key, (int)(object)val);
+                _properties[index] = (key, (T)(object)val);
             }
             else
             {
-                _properties.Add((key, (int)(object)val));
+                _properties.Add((key, (T)(object)val));
             }
         }
     }

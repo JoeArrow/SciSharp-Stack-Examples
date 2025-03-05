@@ -4,6 +4,7 @@ using static Tensorflow.Binding;
 
 namespace TensorFlowNET.Examples;
 
+// --------------------------------------------------------
 /// <summary>
 ///     Basic introduction to TensorFlow's Eager API.
 ///     https://github.com/aymericdamien/TensorFlow-Examples/blob/master/examples/1_Introduction/basic_eager_api.py
