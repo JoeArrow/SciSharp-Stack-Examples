@@ -8,6 +8,8 @@
 
 using Google.Protobuf;
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow;
 using Tensorflow.Keras.Utils;
 
@@ -39,7 +41,7 @@ namespace JWTensorflowNET.Converting
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.compat.v1.disable_eager_execution();
 

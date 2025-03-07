@@ -6,6 +6,8 @@
 //
 #endregion
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow.Keras;
 using Tensorflow.Keras.Engine;
 
@@ -34,7 +36,7 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.enable_eager_execution();
 

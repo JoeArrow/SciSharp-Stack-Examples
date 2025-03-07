@@ -6,6 +6,8 @@
 //
 #endregion
 
+using JWTensorflowNET.ReqResp;
+
 using SciSharp.Models;
 using SciSharp.Models.ImageClassification;
 
@@ -32,7 +34,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             PrepareData();
             Train();

@@ -12,6 +12,7 @@ using Tensorflow.NumPy;
 using Tensorflow.Keras.Utils;
 
 using static Tensorflow.Binding;
+using JWTensorflowNET.ReqResp;
 
 namespace JWTensorflowNET.ImageProcessing
 {
@@ -24,8 +25,8 @@ namespace JWTensorflowNET.ImageProcessing
     {
         string dir = "label_image_data";
         string picFile = "grace_hopper.jpg";
-        string pbFile = "inception_v3_2016_08_28_frozen.pb";
         string labelFile = "imagenet_slim_labels.txt";
+        string pbFile = "inception_v3_2016_08_28_frozen.pb";
 
         int input_mean = 0;
         int input_std = 255;
@@ -46,7 +47,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             PrepareData();
 

@@ -6,6 +6,8 @@
 //
 #endregion
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow;
 using Tensorflow.Keras.Engine;
 using Tensorflow.NumPy;
@@ -51,7 +53,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.enable_eager_execution();
 

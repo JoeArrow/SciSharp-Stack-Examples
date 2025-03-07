@@ -1,6 +1,4 @@
 ﻿namespace TensorFlowNET.Examples.Text
 {
-    interface ITextModel
-    {
-    }
+    interface ITextModel { }
 }

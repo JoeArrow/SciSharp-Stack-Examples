@@ -12,6 +12,7 @@ using Tensorflow.Keras.Utils;
 using Tensorflow.Keras.Engine;
 using static Tensorflow.Binding;
 using static Tensorflow.KerasApi;
+using JWTensorflowNET.ReqResp;
 
 namespace JWTensorflowNET.ImageProcessing
 {
@@ -38,7 +39,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.enable_eager_execution();
 

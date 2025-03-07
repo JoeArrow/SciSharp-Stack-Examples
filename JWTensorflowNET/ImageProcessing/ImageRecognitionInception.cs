@@ -15,6 +15,7 @@ using Tensorflow.Keras.Utils;
 using static Tensorflow.Binding;
 
 using Console = Colorful.Console;
+using JWTensorflowNET.ReqResp;
 
 namespace JWTensorflowNET.ImageProcessing
 {
@@ -42,7 +43,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.compat.v1.disable_eager_execution();
 

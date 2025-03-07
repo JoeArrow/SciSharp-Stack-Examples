@@ -6,6 +6,8 @@
 //
 #endregion
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow.NumPy;
 using static Tensorflow.Binding;
 
@@ -40,7 +42,7 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.compat.v1.disable_eager_execution();
 
@@ -120,6 +122,7 @@ namespace JWTensorflowNET.BasicModels
             var test_X = np.array(6.83f, 4.668f, 8.9f, 7.91f, 5.7f, 8.7f, 3.1f, 2.1f);
             var test_Y = np.array(1.84f, 2.273f, 3.2f, 2.831f, 2.92f, 3.24f, 1.35f, 1.03f);
             var testing_cost = sess.run(tf.reduce_sum(tf.pow(pred - Y, 2.0f)) / (2.0f * test_X.shape[0]), (X, test_X), (Y, test_Y));
+
             var diff = Math.Abs((float)training_cost - (float)testing_cost);
 
             return diff < 0.01;

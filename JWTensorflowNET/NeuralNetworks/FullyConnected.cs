@@ -8,6 +8,8 @@
 
 using System.Diagnostics;
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow;
 
 using static Tensorflow.Binding;
@@ -103,7 +105,7 @@ namespace JWTensorflowNET.NeuralNetworks
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.compat.v1.disable_eager_execution();
 

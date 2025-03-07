@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow;
 using Tensorflow.Keras.Utils;
 using Tensorflow.NumPy;
@@ -39,7 +41,7 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.enable_eager_execution();
 

@@ -1,0 +1,108 @@
+﻿#region © 2025 Joe Arrowood (JoeWare)
+//
+// All rights reserved. Reproduction or transmission in whole or in part, in
+// any form or by any means, electronic, mechanical, or otherwise, is prohibited
+// without the prior written consent of the copyright owner.
+//
+#endregion
+
+using Tensorflow;
+
+using static Tensorflow.Binding;
+
+namespace JWTensorflowNET.TextProcessing.cnn_models
+{
+    // ----------------------------------------------------
+    /// <summary>
+    ///     WordCnn Description
+    /// </summary>
+
+    public class WordCnn : ITextModel
+    {
+        public WordCnn(int vocabulary_size, int document_max_len, int num_class)
+        {
+            Tensor x_emb = null;
+            var num_filters = 100;
+            var embedding_size = 128;
+            var learning_rate = 0.001f;
+            var filter_sizes = new int[3, 4, 5];
+
+            var y = tf.placeholder(tf.int32, -1, name: "y");
+            var global_step = tf.Variable(0, trainable: false);
+            var x = tf.placeholder(tf.int32, (-1, document_max_len), name: "x");
+            var is_training = tf.placeholder(tf.@bool, Shape.Null, name: "is_training");
+
+            var keep_prob = tf.where(is_training, 0.5f, 1.0f);
+
+            tf_with(tf.name_scope("embedding"), scope =>
+            {
+                var init_embeddings = tf.random_uniform(new int[] { vocabulary_size, embedding_size });
+                var embeddings = tf.compat.v1.get_variable("embeddings", initializer: init_embeddings);
+
+                x_emb = tf.nn.embedding_lookup(embeddings, x);
+                x_emb = tf.expand_dims(x_emb, -1);
+            });
+
+            var pooled_outputs = new List<Tensor>();
+
+            for(int len = 0; len < filter_sizes.Rank; len++)
+            {
+                int filter_size = filter_sizes.GetLength(len);
+
+                var conv = tf.keras.layers.Conv2D(filters: num_filters,
+                                                  kernel_size: new int[] { filter_size, embedding_size },
+                                                  strides: new int[] { 1, 1 },
+                                                  padding: "VALID",
+                                                  activation: tf.keras.activations.Relu).Apply(x_emb);
+
+                var pool = tf.keras.layers.MaxPooling2D(pool_size: new[] { document_max_len - filter_size + 1, 1 },
+                                                        strides: new[] { 1, 1 },
+                                                        padding: "VALID").Apply(conv);
+
+                pooled_outputs.Add(pool);
+            }
+
+            Tensor h_drop = null;
+            var h_pool = tf.concat(pooled_outputs, 3);
+            var h_pool_flat = tf.reshape(h_pool, (-1, num_filters * filter_sizes.Rank));
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("dropout"), delegate
+            {
+                h_drop = tf.nn.dropout(h_pool_flat, keep_prob);
+            });
+
+            // ------------------------------------------------
+
+            Tensor logits = null;
+            Tensor predictions = null;
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("output"), delegate
+            {
+                logits = tf.keras.layers.Dense(num_class).Apply(h_drop);
+                predictions = tf.math.argmax(logits, -1, output_type: tf.int32);
+            });
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("loss"), delegate
+            {
+                var sscel = tf.nn.sparse_softmax_cross_entropy_with_logits(logits: logits, labels: y);
+                var loss = tf.reduce_mean(sscel);
+                var adam = tf.train.AdamOptimizer(learning_rate);
+                var optimizer = adam.minimize(loss, global_step: global_step);
+            });
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("accuracy"), delegate
+            {
+                var correct_predictions = tf.equal(predictions, y);
+                var accuracy = tf.reduce_mean(tf.cast(correct_predictions, TF_DataType.TF_FLOAT), name: "accuracy");
+            });
+        }
+    }
+}

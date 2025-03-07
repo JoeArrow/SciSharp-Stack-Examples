@@ -6,6 +6,8 @@
 //
 #endregion
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow;
 using Tensorflow.NumPy;
 
@@ -40,7 +42,7 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.compat.v1.disable_eager_execution();
 

@@ -8,6 +8,8 @@
 
 using System.Diagnostics;
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow;
 using Tensorflow.NumPy;
 
@@ -51,7 +53,7 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             PrepareData();
             var graph = ImportGraph();
@@ -61,7 +63,7 @@ namespace JWTensorflowNET.BasicModels
                 Train(sess);
             }
 
-            return accuray_test > 0.70;
+            return accuray_test > (req == null ? 0.70 : req.GetValue<float>("Threshold"));
         }
 
         // ------------------------------------------------

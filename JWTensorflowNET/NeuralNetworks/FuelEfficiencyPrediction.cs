@@ -9,6 +9,7 @@
 using static Tensorflow.Binding;
 using static PandasNet.PandasApi;
 using static Tensorflow.KerasApi;
+using JWTensorflowNET.ReqResp;
 
 namespace JWTensorflowNET.NeuralNetworks
 {
@@ -27,7 +28,7 @@ namespace JWTensorflowNET.NeuralNetworks
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             PrepareData();
             return true;

@@ -15,6 +15,7 @@ using Tensorflow.Keras.Datasets;
 
 using static Tensorflow.Binding;
 using static Tensorflow.KerasApi;
+using JWTensorflowNET.ReqResp;
 
 namespace JWTensorflowNET.GAN
 {
@@ -56,7 +57,7 @@ namespace JWTensorflowNET.GAN
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.enable_eager_execution();
 

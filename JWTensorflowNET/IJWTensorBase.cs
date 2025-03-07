@@ -6,6 +6,8 @@
 //
 #endregion
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow;
 
 namespace JWTensorflowNET
@@ -16,7 +18,7 @@ namespace JWTensorflowNET
 
         BaseConfig InitConfig();
 
-        bool Run();
+        bool Run(IReq? req = null);
 
         void BuildModel();
 

@@ -6,6 +6,8 @@
 //
 #endregion
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow.NumPy;
 
 using static Tensorflow.Binding;
@@ -35,7 +37,7 @@ namespace JWTensorflowNET.NeuralNetworks
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             PrepareData();
             var loss_value = RunEagerMode();

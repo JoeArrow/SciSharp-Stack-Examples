@@ -1,0 +1,186 @@
+﻿#region © 2025 Joe Arrowood (JoeWare)
+//
+// All rights reserved. Reproduction or transmission in whole or in part, in
+// any form or by any means, electronic, mechanical, or otherwise, is prohibited
+// without the prior written consent of the copyright owner.
+//
+#endregion
+
+using Tensorflow;
+
+using static Tensorflow.Binding;
+using static Tensorflow.KerasApi;
+
+namespace JWTensorflowNET.TextProcessing.cnn_models
+{
+    // ----------------------------------------------------
+    /// <summary>
+    ///     CharCnn Description
+    /// </summary>
+
+    public class CharCnn : ITextModel
+    {
+        public CharCnn(int alphabet_size, int document_max_len, int num_class)
+        {
+            var num_filters = 256;
+            var learning_rate = 0.001f;
+            var filter_sizes = new int[] { 7, 7, 3, 3, 3, 3 };
+            var kernel_initializer = tf.truncated_normal_initializer(stddev: 0.05f);
+
+            var y = tf.placeholder(tf.int32, -1, name: "y");
+            var global_step = tf.Variable(0, trainable: false);
+            var x = tf.placeholder(tf.int32, (-1, document_max_len), name: "x");
+            var is_training = tf.placeholder(tf.@bool, Shape.Null, name: "is_training");
+
+            var keep_prob = tf.where(is_training, 0.5f, 1.0f);
+
+            var x_one_hot = tf.one_hot(x, alphabet_size);
+            var x_expanded = tf.expand_dims(x_one_hot, -1);
+
+            // ============= Convolutional Layers =============
+
+            Tensor h_pool = null;
+            Tensor pool1 = null, pool2 = null;
+            Tensor conv3 = null, conv4 = null, conv5 = null, conv6 = null;
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("conv-maxpool-1"), delegate
+            {
+                var conv1 = keras.layers.Conv2D(filters: num_filters,
+                                                kernel_size: new[] { filter_sizes[0], alphabet_size },
+                                                kernel_initializer: kernel_initializer,
+                                                activation: tf.keras.activations.Relu).Apply(x_expanded);
+
+                pool1 = tf.keras.layers.MaxPooling2D(pool_size: (3, 1),
+                                                     strides: (3, 1)).Apply(conv1);
+
+                pool1 = tf.transpose(pool1, new[] { 0, 1, 3, 2 });
+            });
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("conv-maxpool-2"), delegate
+            {
+                var conv2 = keras.layers.Conv2D(
+                    filters: num_filters,
+                    kernel_size: (filter_sizes[1], num_filters),
+                    kernel_initializer: kernel_initializer,
+                    activation: tf.keras.activations.Relu).Apply(pool1);
+
+                pool2 = tf.keras.layers.MaxPooling2D(
+                    pool_size: (3, 1),
+                    strides: (3, 1)).Apply(conv2);
+                pool2 = tf.transpose(pool2, new[] { 0, 1, 3, 2 });
+            });
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("conv-3"), delegate
+            {
+                conv3 = tf.keras.layers.Conv2D(
+                    filters: num_filters,
+                    kernel_size: (filter_sizes[2], num_filters),
+                    kernel_initializer: kernel_initializer,
+                    activation: tf.keras.activations.Relu).Apply(pool2);
+                conv3 = tf.transpose(conv3, new[] { 0, 1, 3, 2 });
+            });
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("conv-4"), delegate
+            {
+                conv4 = tf.keras.layers.Conv2D(
+                    filters: num_filters,
+                    kernel_size: (filter_sizes[3], num_filters),
+                    kernel_initializer: kernel_initializer,
+                    activation: tf.keras.activations.Relu).Apply(conv3);
+                conv4 = tf.transpose(conv4, new[] { 0, 1, 3, 2 });
+            });
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("conv-5"), delegate
+            {
+                conv5 = keras.layers.Conv2D(
+                    filters: num_filters,
+                    kernel_size: (filter_sizes[4], num_filters),
+                    kernel_initializer: kernel_initializer,
+                    activation: tf.keras.activations.Relu).Apply(conv4);
+                conv5 = tf.transpose(conv5, new[] { 0, 1, 3, 2 });
+            });
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("conv-maxpool-6"), delegate
+            {
+                conv6 = keras.layers.Conv2D(
+                    filters: num_filters,
+                    kernel_size: (filter_sizes[5], num_filters),
+                    kernel_initializer: kernel_initializer,
+                    activation: tf.keras.activations.Relu).Apply(conv5);
+
+                var pool6 = keras.layers.MaxPooling2D(
+                    pool_size: (3, 1),
+                    strides: (3, 1)).Apply(conv6);
+                pool6 = tf.transpose(pool6, new[] { 0, 2, 1, 3 });
+
+                h_pool = tf.reshape(pool6, new[] { -1, 34 * num_filters });
+            });
+
+            // ============= Fully Connected Layers =============
+
+            Tensor fc2_out = null;
+            Tensor logits = null;
+            Tensor predictions = null;
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("fc-1"), delegate
+            {
+                /*fc1_out = tf.layers.dense(h_pool,
+                    1024,
+                    activation: tf.nn.relu(),
+                    kernel_initializer: kernel_initializer);*/
+            });
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("fc-2"), delegate
+            {
+                /*fc2_out = tf.layers.dense(fc1_out,
+                    1024,
+                    activation: tf.nn.relu(),
+                    kernel_initializer: kernel_initializer);*/
+            });
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("fc-3"), delegate
+            {
+                logits = tf.keras.layers.Dense(
+                    num_class,
+                    kernel_initializer: kernel_initializer).Apply(fc2_out);
+                predictions = tf.math.argmax(logits, -1, output_type: tf.int32);
+            });
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("loss"), delegate
+            {
+                var y_one_hot = tf.one_hot(y, num_class);
+                var loss = tf.reduce_mean(
+                    tf.nn.softmax_cross_entropy_with_logits_v2(logits: logits, labels: y_one_hot));
+                var optimizer = tf.train.AdamOptimizer(learning_rate).minimize(loss, global_step: global_step);
+            });
+
+            // ------------------------------------------------
+
+            tf_with(tf.name_scope("accuracy"), delegate
+            {
+                var correct_predictions = tf.equal(predictions, y);
+                var accuracy = tf.reduce_mean(tf.cast(correct_predictions, tf.float32), name: "accuracy");
+            });
+        }
+    }
+}

@@ -8,6 +8,8 @@
 
 using System;
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow;
 using Tensorflow.Keras.Utils;
 using Tensorflow.NumPy;
@@ -39,7 +41,7 @@ namespace JWTensorflowNET.NeuralNetworks
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.compat.v1.disable_eager_execution();
 

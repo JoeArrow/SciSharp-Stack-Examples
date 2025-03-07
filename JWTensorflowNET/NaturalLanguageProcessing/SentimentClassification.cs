@@ -10,6 +10,7 @@ using static Tensorflow.KerasApi;
 
 using SciSharp.Models;
 using SciSharp.Models.TimeSeries;
+using JWTensorflowNET.ReqResp;
 
 namespace JWTensorflowNET.NaturalLanguageProcessing
 {
@@ -32,7 +33,7 @@ namespace JWTensorflowNET.NaturalLanguageProcessing
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             var wizard = new ModelWizard();
 

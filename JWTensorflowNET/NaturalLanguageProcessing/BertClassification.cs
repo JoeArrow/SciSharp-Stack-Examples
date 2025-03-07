@@ -7,6 +7,9 @@
 #endregion
 
 using BERT;
+
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow.NumPy;
 using static Tensorflow.Binding;
 using static Tensorflow.KerasApi;
@@ -71,7 +74,7 @@ namespace JWTensorflowNET.NaturalLanguageProcessing
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             var model = keras.Sequential();
             model.add(keras.layers.Input(max_seq_len, batch_size, dtype: tf.int32));

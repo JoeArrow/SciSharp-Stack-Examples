@@ -8,13 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Utility\" />
-    <Folder Include="TimeSeries\" />
-    <Folder Include="TextProcessing\" />
-    <Folder Include="ObjectDetection\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Colorful.Console" Version="1.2.15" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.10.0.20241108" />

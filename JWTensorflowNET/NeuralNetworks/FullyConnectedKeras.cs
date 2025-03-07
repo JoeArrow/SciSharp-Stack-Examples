@@ -6,6 +6,8 @@
 //
 #endregion
 
+using JWTensorflowNET.ReqResp;
+
 using Tensorflow;
 using Tensorflow.NumPy;
 
@@ -79,7 +81,7 @@ namespace JWTensorflowNET.NeuralNetworks
 
         // ------------------------------------------------
 
-        public bool Run()
+        public bool Run(IReq? req = null)
         {
             tf.enable_eager_execution();
 

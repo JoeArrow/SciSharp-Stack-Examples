@@ -9,8 +9,10 @@ namespace TensorFlowNET.Examples
     
     public class BasicOperations : SciSharpExample, IExample
     {
-        public ExampleConfig InitConfig()
-            => Config = new ExampleConfig { Name = "Basic Operations" };
+        public ExampleConfig InitConfig() => Config = new ExampleConfig 
+        { 
+            Name = "Basic Operations" 
+        };
 
         public bool Run()
         {
