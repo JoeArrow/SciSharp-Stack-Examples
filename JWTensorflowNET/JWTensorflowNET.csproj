@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="NaturalLanguageProcessing\" />
     <Folder Include="NeuralNetworks\" />
     <Folder Include="Utility\" />
     <Folder Include="TimeSeries\" />
