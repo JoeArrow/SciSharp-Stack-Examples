@@ -35,9 +35,9 @@ namespace JWTensorflowNET.BasicModels
 
         public BaseConfig InitConfig() => Config = new BaseConfig
         {
-            Name = "Linear Regression (Graph)",
             Enabled = true,
-            IsImportingGraph = false
+            IsImportingGraph = false,
+            Name = "Linear Regression (Graph)",
         };
 
         // ------------------------------------------------

@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="BasicModels\" />
     <Folder Include="Converting\" />
     <Folder Include="GAN\" />
     <Folder Include="ImageProcessing\" />

@@ -34,9 +34,9 @@ namespace JWTensorflowNET.BasicModels
 
         public BaseConfig InitConfig() => Config = new BaseConfig
         {
-            Name = "Naive Bayes Classifier",
             Enabled = true,
-            IsImportingGraph = false
+            IsImportingGraph = false,
+            Name = "Naive Bayes Classifier",
         };
 
         // ------------------------------------------------

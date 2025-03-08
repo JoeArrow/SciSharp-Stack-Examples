@@ -46,7 +46,7 @@ namespace JWTensorflowNET.BasicModels
 
         public BaseConfig InitConfig() => Config = new BaseConfig
         {
-            Enabled = false,
+            Enabled = true,
             IsImportingGraph = true,
             Name = "K-means Clustering",
         };
@@ -99,7 +99,10 @@ namespace JWTensorflowNET.BasicModels
         {
             var graph = tf.Graph().as_default();
 
-            tf.train.import_meta_graph(".resources/graph/kmeans.meta");
+            using(tf.init_scope())  // Ensures TensorFlow initializes properly
+            {
+                tf.train.import_meta_graph(".resources/graph/kmeans.meta");
+            }
 
             return graph;
         }
@@ -108,7 +111,7 @@ namespace JWTensorflowNET.BasicModels
 
         public void Train(Session sess)
         {
-            var graph = tf.Graph();
+            var graph = sess.graph;
 
             // ------------
             // Input images
@@ -147,7 +150,7 @@ namespace JWTensorflowNET.BasicModels
                 }
             }
 
-            var idx = result[2].ToArray<int>();
+            var idx = result[2].ToArray<Int64>();
 
             // -------------------------------
             // Assign a label to each centroid
@@ -161,7 +164,7 @@ namespace JWTensorflowNET.BasicModels
             foreach(var i in range(idx.Length))
             {
                 var x = mnist.Train.Labels[i];
-                throw new NotImplementedException("");
+                counts[(int)idx[i], np.argmax(x)] += 1;
             }
 
             sw.Stop();
@@ -190,6 +193,8 @@ namespace JWTensorflowNET.BasicModels
             // Test Model
 
             var (test_x, test_y) = (mnist.Test.Data, mnist.Test.Labels);
+
+            accuray_test = sess.run(accuracy_op, new FeedItem(X, test_x), new FeedItem(Y, test_y));
 
             print($"Test Accuracy: {accuray_test}");
         }
