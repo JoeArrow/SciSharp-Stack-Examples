@@ -45,7 +45,7 @@ namespace KMeansClustering_Tests
             // ---
             // Act
 
-            var resp = sut.Run(req);
+            var resp = sut.Run(clipped_grads, req);
 
             // ------
             // Assert
@@ -66,7 +66,7 @@ namespace KMeansClustering_Tests
             // ---
             // Act
 
-            var resp = sut.Run();
+            var resp = sut.Run(clipped_grads);
 
             // ------
             // Assert
