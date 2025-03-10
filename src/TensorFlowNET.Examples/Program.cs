@@ -62,7 +62,7 @@ namespace TensorFlowNET.Examples
                 var (isSuccess, name) = (true, "");
 
                 sw.Restart();
-                (isSuccess, name) = RunExamples(examples[i], parsedArgs);
+                (isSuccess, name) = RunExample(examples[i], parsedArgs);
                 sw.Stop();
 
                 if(isSuccess)
@@ -112,7 +112,7 @@ namespace TensorFlowNET.Examples
 
         // ------------------------------------------------
 
-        private static (bool, string) RunExamples(Type example, Dictionary<string, string> args)
+        private static (bool, string) RunExample(Type example, Dictionary<string, string> args)
         {
             var instance = (IExample)Activator.CreateInstance(example);
             instance.InitConfig();
