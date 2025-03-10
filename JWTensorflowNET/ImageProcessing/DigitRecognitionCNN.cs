@@ -47,7 +47,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
             Train();
             Test();
             Predict();
@@ -119,7 +119,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             Directory.CreateDirectory("image_classification_cnn_v1");
             var loader = new MnistModelLoader();

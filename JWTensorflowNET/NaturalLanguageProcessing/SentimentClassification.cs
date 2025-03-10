@@ -49,7 +49,7 @@ namespace JWTensorflowNET.NaturalLanguageProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             // --------------------------------------------
             // tf.debugging.set_log_device_placement(true);

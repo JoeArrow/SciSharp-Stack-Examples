@@ -64,7 +64,7 @@ namespace JWTensorflowNET.TextProcessing
         {
             tf.compat.v1.disable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
 
             var graph = tf.Graph().as_default();
 
@@ -214,7 +214,7 @@ namespace JWTensorflowNET.TextProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             // -------------------
             // Download graph meta

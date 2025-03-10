@@ -66,7 +66,7 @@ namespace JWTensorflowNET.ImageProcessing
         {
             tf.compat.v1.disable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
             BuildGraph();
 
             sess = tf.Session();
@@ -172,7 +172,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             var loader = new MnistModelLoader();
             mnist = loader.LoadAsync(".resources/mnist", oneHot: true, showProgressInConsole: true).Result;

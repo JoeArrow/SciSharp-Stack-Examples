@@ -36,7 +36,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
             Train();
             Test();
             Predict();
@@ -46,7 +46,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             // ----------------------------
             // get a set of images to teach

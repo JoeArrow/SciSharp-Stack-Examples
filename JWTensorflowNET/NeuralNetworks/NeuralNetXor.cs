@@ -45,7 +45,7 @@ namespace JWTensorflowNET.NeuralNetworks
         {
             tf.compat.v1.disable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
             float loss_value = 0;
 
             if(Config.IsImportingGraph) 
@@ -179,7 +179,7 @@ namespace JWTensorflowNET.NeuralNetworks
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             data = new float[,]
             {

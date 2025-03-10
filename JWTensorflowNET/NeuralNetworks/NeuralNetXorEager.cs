@@ -39,7 +39,7 @@ namespace JWTensorflowNET.NeuralNetworks
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
             var loss_value = RunEagerMode();
             return loss_value < 0.0628;
         }
@@ -109,7 +109,7 @@ namespace JWTensorflowNET.NeuralNetworks
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             data = new float[,]
             {

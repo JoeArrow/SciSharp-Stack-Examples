@@ -50,7 +50,7 @@ namespace JWTensorflowNET.NeuralNetworks
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             // -------------------
             // Prepare MNIST data.
@@ -85,7 +85,7 @@ namespace JWTensorflowNET.NeuralNetworks
         {
             tf.enable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
 
             // ---------------------------
             // Build neural network model.

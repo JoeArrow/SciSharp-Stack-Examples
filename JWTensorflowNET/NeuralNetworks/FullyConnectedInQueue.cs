@@ -69,7 +69,7 @@ namespace JWTensorflowNET.NeuralNetworks
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             // --------------------------------------------------------
             // batches of 128 samples, each containing 1024 data points
@@ -87,7 +87,7 @@ namespace JWTensorflowNET.NeuralNetworks
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
             BuildGraph();
             Train();
             return true;

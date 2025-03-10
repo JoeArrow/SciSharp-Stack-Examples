@@ -37,7 +37,7 @@ namespace JWTensorflowNET.ObjectDetection
         public bool Run(IReq? req = null)
         {
             cfg = new YoloConfig("YOLOv3");
-            (trainingData, testingData) = PrepareData();
+            (trainingData, testingData) = PrepareData(req);
             // Train();
             Test();
             return true;
@@ -90,7 +90,7 @@ namespace JWTensorflowNET.ObjectDetection
 
         // ------------------------------------------------
 
-        public (YoloDataset, YoloDataset) PrepareData()
+        public (YoloDataset, YoloDataset) PrepareData(IReq req)
         {
             string dataDir = Path.Combine("YOLOv3", "data");
             Directory.CreateDirectory(dataDir);

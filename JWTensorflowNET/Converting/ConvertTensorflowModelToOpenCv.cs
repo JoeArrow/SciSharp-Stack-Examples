@@ -45,7 +45,7 @@ namespace JWTensorflowNET.Converting
         {
             tf.compat.v1.disable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
             BuildGraph();
 
             return true;
@@ -179,7 +179,7 @@ namespace JWTensorflowNET.Converting
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             // --------------
             // get model file

@@ -34,7 +34,7 @@ namespace JWTensorflowNET.TextProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             var fileName = "aclImdb_v1.tar.gz";
             var url = $"https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz";

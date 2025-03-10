@@ -61,7 +61,7 @@ namespace JWTensorflowNET.GAN
         {
             tf.enable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
             Train();
             //Test();
 
@@ -70,7 +70,7 @@ namespace JWTensorflowNET.GAN
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             data = keras.datasets.mnist.load_data();
 

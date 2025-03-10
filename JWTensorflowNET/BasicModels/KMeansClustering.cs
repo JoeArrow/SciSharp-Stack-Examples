@@ -55,7 +55,7 @@ namespace JWTensorflowNET.BasicModels
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
             var graph = ImportGraph();
 
             using(var sess = tf.Session(graph))
@@ -68,7 +68,7 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             var loader = new MnistModelLoader();
 

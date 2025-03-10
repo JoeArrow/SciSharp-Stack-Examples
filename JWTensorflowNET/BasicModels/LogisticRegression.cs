@@ -49,7 +49,7 @@ namespace JWTensorflowNET.BasicModels
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
             tf.compat.v1.disable_eager_execution();
             Train();
 
@@ -58,7 +58,7 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             var loader = new MnistModelLoader();
             mnist = loader.LoadAsync(".resources/mnist", oneHot: true, trainSize: train_size, validationSize: validation_size, testSize: test_size, showProgressInConsole: true).Result;

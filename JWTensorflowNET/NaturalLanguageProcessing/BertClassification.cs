@@ -44,7 +44,7 @@ namespace JWTensorflowNET.NaturalLanguageProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             // --------------------------------------------
             // tf.debugging.set_log_device_placement(true);
@@ -90,7 +90,7 @@ namespace JWTensorflowNET.NaturalLanguageProcessing
                           loss: keras.losses.SparseCategoricalCrossentropy(from_logits: true), metrics: new[] { "acc" });
 
             model.summary();
-            PrepareData();
+            PrepareData(req);
 
             model.fit(np_x_train, np_y_train,
                       batch_size: batch_size,

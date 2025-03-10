@@ -30,13 +30,13 @@ namespace JWTensorflowNET.NeuralNetworks
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
             return true;
         }
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             string url = $"http://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data";
             var dataset = pd.read_csv(url,

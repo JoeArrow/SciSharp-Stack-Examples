@@ -28,20 +28,20 @@ namespace JWTensorflowNET
         /// </summary>
         /// <returns></returns>
 
+        void Test();
         void Train();
         string FreezeModel();
-        void Test();
 
         void Predict();
 
-        Graph ImportGraph();
         Graph BuildGraph();
+        Graph ImportGraph();
 
         /// -----------------------------------------------
         /// <summary>
         ///     Prepare dataset
         /// </summary>
 
-        void PrepareData();
+        void PrepareData(IReq req);
     }
 }

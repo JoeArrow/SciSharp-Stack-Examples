@@ -48,7 +48,7 @@ namespace JWTensorflowNET.BasicModels
 
             // Training Data
 
-            PrepareData();
+            PrepareData(req);
 
             Train();
 
@@ -109,7 +109,7 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             train_X = np.array(3.3f,   4.4f,   5.5f,    6.71f,
                                6.93f,  4.168f, 9.779f,  6.182f,

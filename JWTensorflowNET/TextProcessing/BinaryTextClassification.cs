@@ -40,7 +40,7 @@ namespace JWTensorflowNET.TextProcessing
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
 
             var model = keras.Sequential();
 
@@ -49,7 +49,7 @@ namespace JWTensorflowNET.TextProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             string url = "https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz";
 

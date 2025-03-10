@@ -47,7 +47,7 @@ namespace JWTensorflowNET.ImageProcessing
         {
             tf.compat.v1.disable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
 
             var graph = tf.Graph().as_default();
 
@@ -111,7 +111,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             Directory.CreateDirectory(dir);
 

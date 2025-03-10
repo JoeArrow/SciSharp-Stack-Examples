@@ -49,7 +49,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
 
             var labels = File.ReadAllLines(Path.Join(dir, labelFile));
 
@@ -110,7 +110,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             Directory.CreateDirectory(dir);
 

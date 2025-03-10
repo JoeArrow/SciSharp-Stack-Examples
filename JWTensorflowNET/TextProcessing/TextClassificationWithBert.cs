@@ -37,13 +37,13 @@ namespace JWTensorflowNET.TextProcessing
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
             return false;
         }
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             string url = "https://ai.stanford.edu/~amaas/data/sentiment/aclImdb_v1.tar.gz";
             

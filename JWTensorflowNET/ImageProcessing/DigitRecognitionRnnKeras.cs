@@ -47,7 +47,7 @@ namespace JWTensorflowNET.ImageProcessing
         {
             tf.enable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
             BuildModel();
             Train();
             Test();
@@ -98,7 +98,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             ((x_train, y_train), (x_test, y_test)) = keras.datasets.mnist.load_data();
             // Convert to float32.

@@ -51,7 +51,7 @@ namespace JWTensorflowNET.ObjectDetection
         {
             tf.compat.v1.disable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
 
             Predict();
 
@@ -92,7 +92,7 @@ namespace JWTensorflowNET.ObjectDetection
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             // get model file
             string url = "http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_2018_01_28.tar.gz";

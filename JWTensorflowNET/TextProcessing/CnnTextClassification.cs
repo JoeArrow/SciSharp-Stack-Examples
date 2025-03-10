@@ -69,7 +69,7 @@ namespace JWTensorflowNET.TextProcessing
         {
             tf.compat.v1.disable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
             Predict();
             Test();
             Train();
@@ -141,7 +141,7 @@ namespace JWTensorflowNET.TextProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             // full dataset https://github.com/le-scientifique/torchDatasets/raw/master/dbpedia_csv.tar.gz
             var url = "https://raw.githubusercontent.com/SciSharp/TensorFlow.NET/master/data/dbpedia_subset.zip";

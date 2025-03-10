@@ -51,14 +51,14 @@ namespace JWTensorflowNET.ObjectDetection
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
             Predict();
             return true;
         }
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             // download video
             string url = "https://raw.githubusercontent.com/YunYang1994/tensorflow-yolov3/master/docs/images/road.mp4";

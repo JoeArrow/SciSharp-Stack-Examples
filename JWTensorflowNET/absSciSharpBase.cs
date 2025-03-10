@@ -8,6 +8,7 @@
 
 using Tensorflow.Keras.Layers;
 using Tensorflow;
+using JWTensorflowNET.ReqResp;
 
 namespace JWTensorflowNET
 {
@@ -41,7 +42,7 @@ namespace JWTensorflowNET
 
         // ----------------------------------------------------
 
-        public virtual void PrepareData()
+        public virtual void PrepareData(IReq req)
         {
             throw new NotImplementedException();
         }

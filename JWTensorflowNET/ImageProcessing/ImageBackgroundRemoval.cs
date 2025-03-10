@@ -39,7 +39,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         public bool Run(IReq? req = null)
         {
-            PrepareData();
+            PrepareData(req);
 
             // ----------------------------
             // import GraphDef from pb file
@@ -61,7 +61,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             // -------------------------
             // Get mobile_net_model file

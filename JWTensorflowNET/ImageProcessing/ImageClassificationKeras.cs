@@ -43,7 +43,7 @@ namespace JWTensorflowNET.ImageProcessing
         {
             tf.enable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
             BuildModel();
             Train();
 
@@ -86,7 +86,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             var fileName = "flower_photos.tgz";
             var url = $"https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz";

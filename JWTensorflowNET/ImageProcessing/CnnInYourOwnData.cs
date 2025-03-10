@@ -117,7 +117,7 @@ namespace JWTensorflowNET.ImageProcessing
         {
             tf.compat.v1.disable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
             BuildGraph();
 
             sess = tf.Session();
@@ -160,7 +160,7 @@ namespace JWTensorflowNET.ImageProcessing
 
         // ----------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             string url = "https://github.com/SciSharp/SciSharp-Stack-Examples/raw/master/data/data_CnnInYourOwnData.zip";
             Directory.CreateDirectory(Config.Name);

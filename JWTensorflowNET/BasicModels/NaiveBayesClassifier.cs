@@ -45,7 +45,7 @@ namespace JWTensorflowNET.BasicModels
         {
             tf.enable_eager_execution();
 
-            PrepareData();
+            PrepareData(req);
 
             fit(X, y);
 
@@ -190,7 +190,7 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             X = np.array(new float[,] {
                 {5.1f, 3.5f}, {4.9f, 3.0f}, {4.7f, 3.2f}, {4.6f, 3.1f}, {5.0f, 3.6f}, {5.4f, 3.9f},

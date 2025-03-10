@@ -76,7 +76,7 @@ namespace JWTensorflowNET.BasicModels
 
                 sess.run(init);
 
-                PrepareData();
+                PrepareData(req);
 
                 foreach(int i in range((int)Xte.shape[0]))
                 {
@@ -112,7 +112,7 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req)
         {
             var loader = new MnistModelLoader();
             mnist = loader.LoadAsync(".resources/mnist", oneHot: true, trainSize: TrainSize, validationSize: ValidationSize, testSize: TestSize, showProgressInConsole: true).Result;
