@@ -6,10 +6,12 @@
 //
 #endregion
 
-using JWTensorflowNET.ReqResp;
 using JWTensorflowNET.BasicModels;
+using JWTensorflowNET.ReqResp;
 
-namespace LinearRegression_Test
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace LinearRegressionEager_Test
 {
     // ----------------------------------------------------
     /// <summary>
@@ -17,51 +19,48 @@ namespace LinearRegression_Test
     /// </summary>
 
     [TestClass]
-    public class LinearRegression_Test
+    public class LinearRegressionEager_Test
     {
-        public LinearRegression_Test() { }
+        public LinearRegressionEager_Test() { }
 
         // ------------------------------------------------
 
         [TestMethod]
-        [DynamicData(nameof(GetLinearRegressionTestData), DynamicDataSourceType.Method)]
-        public void Run_LinearRegression(bool expected, float bias, float weight, 
-                                         float[] test_X, float[] test_Y, 
-                                         float[] input, float[] output)
+        [DynamicData(nameof(LinearRegressionEagerTestData), DynamicDataSourceType.Method)]
+        public void Run_LinearRegressionEager(bool expected, float bias, float weight,
+                                              float[] input, float[] output)
         {
             // -------
             // Arrange
 
             var req = new Req();
-            var sut = new LinearRegression();
+            var sut = new LinearRegressionEager();
 
             req.SetValue<float>("Bias", bias);
             req.SetValue<float>("Weight", weight);
             req.SetValue<float[]>("Input", input);
             req.SetValue<float[]>("Output", output);
-            req.SetValue<float[]>("Test_X", test_X);
-            req.SetValue<float[]>("Test_Y", test_Y);
 
             // ---
             // Act
 
-            var actual = sut.Run(req);
+            var resp = sut.Run(req);
 
             // ------
             // Assert
 
-            Assert.AreEqual(expected, actual, "Linear Regression model did not return expected results.");
+            Assert.AreEqual(expected, resp, "Linear Regression model did not return expected results.");
         }
 
         // ------------------------------------------------
 
         [TestMethod]
-        public void InitConfig_LinearRegression()
+        public void InitConfig_LinearRegressionEager()
         {
             // -------
             // Arrange
 
-            var sut = new LinearRegression();
+            var sut = new LinearRegressionEager();
 
             // ---
             // Act
@@ -78,15 +77,13 @@ namespace LinearRegression_Test
         // Data provider method
         // ================================================
 
-        public static IEnumerable<object[]> GetLinearRegressionTestData()
+        public static IEnumerable<object[]> LinearRegressionEagerTestData()
         {
             yield return new object[]
             {
                 true,
                 -0.73f,
                 -0.06f,
-                new float[] {6.83f, 4.668f, 8.9f, 7.91f, 5.7f, 8.7f, 3.1f, 2.1f},
-                new float[] {1.84f, 2.273f, 3.2f, 2.831f, 2.92f, 3.24f, 1.35f, 1.03f},
                 
                 // --------
                 // Features

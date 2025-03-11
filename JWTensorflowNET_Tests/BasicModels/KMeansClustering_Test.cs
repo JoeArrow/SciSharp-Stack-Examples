@@ -19,9 +19,9 @@ namespace KMeansClustering_Tests
     /// </summary>
 
     [TestClass]
-    public class KMeansClustering_Tests
+    public class KMeansClustering_Test
     {
-        public KMeansClustering_Tests() { }
+        public KMeansClustering_Test() { }
 
         // ------------------------------------------------
 
