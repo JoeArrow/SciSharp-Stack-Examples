@@ -162,9 +162,10 @@ namespace JWTensorflowNET.BasicModels
 
         public override void PrepareData()
         {
+            //  Volume,   CPU,  Disk I/O
+
             train_X = np.array(new float[,]
             {
-            //  Volume,   CPU,  Disl I/O
                 { 3.3f,    50f,  2f },
                 { 4.4f,    40f,  3f },
                 { 5.5f,    60f,  5f },
@@ -184,6 +185,8 @@ namespace JWTensorflowNET.BasicModels
                 { 3.1f,    20f,  2f }
             });
 
+            // -------
+            // Runtime
 
             train_Y = np.array(30.30f, 40.40f, 50.50f, 60.71f, 60.97f,
                                40.16f, 90.77f, 60.18f, 70.59f, 20.16F,
