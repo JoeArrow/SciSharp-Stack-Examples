@@ -6,8 +6,11 @@
 //
 #endregion
 
-using Tensorflow.Keras.Layers;
+using System.Diagnostics.CodeAnalysis;
+
 using Tensorflow;
+using Tensorflow.Keras.Layers;
+
 using JWTensorflowNET.ReqResp;
 
 namespace JWTensorflowNET
@@ -17,6 +20,7 @@ namespace JWTensorflowNET
     ///     SciSharpBase Description
     /// </summary>
 
+    [ExcludeFromCodeCoverage]
     public abstract class absSciSharpBase
     {
         public BaseConfig Config { get; set; }

@@ -24,15 +24,15 @@ namespace JWTensorflowNET.BasicModels
 
     public class LogisticRegression : absSciSharpBase, IJWTensorBase
     {
-        public int training_epochs = 10;
-        public int? train_size = null;
-        public int validation_size = 5000;
-        public int? test_size = null;
         public int batch_size = 100;
+        public int? test_size = null;
+        public int? train_size = null;
+        public int training_epochs = 10;
+        public int validation_size = 5000;
 
-        private float learning_rate = 0.01f;
-        private int display_step = 1;
         float accuracy = 0f;
+        private int display_step = 1;
+        private float learning_rate = 0.01f;
 
         Datasets<MnistDataSet> mnist;
 
@@ -40,9 +40,9 @@ namespace JWTensorflowNET.BasicModels
 
         public BaseConfig InitConfig() => Config = new BaseConfig
         {
-            Name = "Logistic Regression (Graph)",
             Enabled = true,
-            IsImportingGraph = false
+            IsImportingGraph = false,
+            Name = "Logistic Regression (Graph)",
         };
 
         // ------------------------------------------------
@@ -50,6 +50,7 @@ namespace JWTensorflowNET.BasicModels
         public bool Run(IReq? req = null)
         {
             PrepareData(req);
+
             tf.compat.v1.disable_eager_execution();
             Train();
 
@@ -61,7 +62,7 @@ namespace JWTensorflowNET.BasicModels
         public override void PrepareData(IReq req)
         {
             var loader = new MnistModelLoader();
-            mnist = loader.LoadAsync(".resources/mnist", oneHot: true, trainSize: train_size, validationSize: validation_size, testSize: test_size, showProgressInConsole: true).Result;
+            mnist = loader.LoadAsync(req.GetValue<string>("DataFile"), oneHot: true, trainSize: train_size, validationSize: validation_size, testSize: test_size, showProgressInConsole: true).Result;
         }
 
         // ------------------------------------------------
@@ -71,8 +72,8 @@ namespace JWTensorflowNET.BasicModels
             // --------------
             // tf Graph Input
 
-            var x = tf.placeholder(tf.float32, (-1, 784)); // mnist data image of shape 28*28=784
-            var y = tf.placeholder(tf.float32, (-1, 10)); // 0-9 digits recognition => 10 classes
+            var x = tf.placeholder(tf.float32, (-1, 784));  // mnist data image of shape 28*28=784
+            var y = tf.placeholder(tf.float32, (-1, 10));   // 0-9 digits recognition => 10 classes
 
             // -----------------
             // Set model weights
@@ -83,7 +84,7 @@ namespace JWTensorflowNET.BasicModels
             // ---------------
             // Construct model
 
-            var pred = tf.nn.softmax(tf.matmul(x, W) + b); // Softmax
+            var pred = tf.nn.softmax(tf.matmul(x, W) + b);  // Softmax
 
             // ----------------------------------
             // Minimize error using cross entropy
@@ -147,18 +148,22 @@ namespace JWTensorflowNET.BasicModels
                 // Display logs per epoch step
 
                 if((epoch + 1) % display_step == 0)
+                {
                     print($"Epoch: {(epoch + 1):D4} Cost: {avg_cost:G9} Elapsed: {sw.ElapsedMilliseconds}ms");
+                }
 
                 sw.Reset();
             }
 
             print("Optimization Finished!");
-            //SaveModel(sess);
+            SaveModel(sess);
 
+            // ----------
             // Test model
             
             var correct_prediction = tf.equal(tf.math.argmax(pred, 1), tf.math.argmax(y, 1));
             
+            // ------------------
             // Calculate accuracy
 
             var acc = tf.reduce_mean(tf.cast(correct_prediction, tf.float32));
@@ -168,11 +173,41 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
+        //public void SaveModel(Session sess)
+        //{
+        //    string modelDir = ".resources/logistic_regression";
+        //
+        //    if(!Directory.Exists(modelDir))
+        //    {
+        //        Directory.CreateDirectory(modelDir);
+        //    }
+        //
+        //    var saver = tf.train.Saver();
+        //    saver.save(sess, Path.Combine(modelDir, "model.ckpt"));  // Save checkpoint
+        //
+        //    // Save graph definition
+        //
+        //    tf.train.write_graph(sess.graph, modelDir, "model.pbtxt", as_text: true);
+        //
+        //    Console.WriteLine("Model checkpoint and graph definition saved.");
+        //}
+
         public void SaveModel(Session sess)
         {
             var saver = tf.train.Saver();
+            var cr = Environment.NewLine;
+
             saver.save(sess, ".resources/logistic_regression/model.ckpt");
             tf.train.write_graph(sess.graph, ".resources/logistic_regression", "model.pbtxt", as_text: true);
+
+            Console.WriteLine($"{cr}Checking operations...{cr}");
+
+            foreach(var op in sess.graph.get_operations())
+            {
+                Console.WriteLine(op.name);
+            }
+
+            Console.WriteLine("");
 
             FreezeGraph.freeze_graph(input_graph: ".resources/logistic_regression/model.pbtxt",
                                      input_saver: "",

@@ -6,10 +6,8 @@
 //
 #endregion
 
-using JWTensorflowNET.BasicModels;
 using JWTensorflowNET.ReqResp;
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using JWTensorflowNET.BasicModels;
 
 namespace KMeansClustering_Tests
 {

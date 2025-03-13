@@ -112,6 +112,7 @@ namespace JWTensorflowNET.BasicModels
         public void Train(Session sess)
         {
             var graph = sess.graph;
+            NDArray[] result = null;
 
             // ------------
             // Input images
@@ -123,12 +124,12 @@ namespace JWTensorflowNET.BasicModels
 
             Tensor Y = graph.get_operation_by_name("Placeholder_1");
 
+
             var init_vars = tf.global_variables_initializer();
-            Tensor init_op = graph.get_operation_by_name("cond/Merge");
             var train_op = graph.get_operation_by_name("group_deps");
             Tensor avg_distance = graph.get_operation_by_name("Mean");
+            Tensor init_op = graph.get_operation_by_name("cond/Merge");
             Tensor cluster_idx = graph.get_operation_by_name("Squeeze_1");
-            NDArray[] result = null;
 
             sess.run(init_vars, new FeedItem(X, full_data_x));
             sess.run(init_op, new FeedItem(X, full_data_x));

@@ -6,6 +6,8 @@
 //
 #endregion
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace JWTensorflowNET
 {
     // ----------------------------------------------------
@@ -13,6 +15,7 @@ namespace JWTensorflowNET
     ///     BaseConfig Description
     /// </summary>
 
+    [ExcludeFromCodeCoverage]
     public class BaseConfig
     {
         /// -----------------------------------------------

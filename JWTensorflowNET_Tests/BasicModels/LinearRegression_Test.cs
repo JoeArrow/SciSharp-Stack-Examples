@@ -6,6 +6,8 @@
 //
 #endregion
 
+using System.Text.Json;
+
 using JWTensorflowNET.ReqResp;
 using JWTensorflowNET.BasicModels;
 
@@ -24,13 +26,22 @@ namespace LinearRegression_Test
         // ------------------------------------------------
 
         [TestMethod]
-        [DynamicData(nameof(GetLinearRegressionTestData), DynamicDataSourceType.Method)]
+        [DataRow(true, -0.73f, -0.06f,
+                 "[6.83, 4.668, 8.9, 7.91, 5.7, 8.7, 3.1, 2.1]",
+                 "[1.84, 2.273, 3.2, 2.831, 2.92, 3.24, 1.35, 1.03]",
+                 "[3.3, 4.4, 5.5, 6.71, 6.93, 4.168, 9.779, 6.182, 7.59, 2.167, 7.042, 10.791, 5.313, 7.997, 5.654, 9.27, 3.1]",
+                 "[1.7, 2.76, 2.09, 3.19, 1.694, 1.573, 3.366, 2.596, 2.53, 1.221, 2.827, 3.465, 1.65, 2.904, 2.42, 2.94, 1.3]")]
         public void Run_LinearRegression(bool expected, float bias, float weight, 
-                                         float[] test_X, float[] test_Y, 
-                                         float[] input, float[] output)
+                                         string test_XJson, string test_YJson, 
+                                         string inputJson, string outputJson)
         {
             // -------
             // Arrange
+
+            var input = JsonSerializer.Deserialize<float[]>(inputJson);
+            var output = JsonSerializer.Deserialize<float[]>(outputJson);
+            var test_X = JsonSerializer.Deserialize<float[]>(test_XJson);
+            var test_Y = JsonSerializer.Deserialize<float[]>(test_YJson);
 
             var req = new Req();
             var sut = new LinearRegression();
@@ -72,32 +83,6 @@ namespace LinearRegression_Test
             // Assert
 
             Assert.IsNotNull(resp);
-        }
-
-        // ================================================
-        // Data provider method
-        // ================================================
-
-        public static IEnumerable<object[]> GetLinearRegressionTestData()
-        {
-            yield return new object[]
-            {
-                true,
-                -0.73f,
-                -0.06f,
-                new float[] {6.83f, 4.668f, 8.9f, 7.91f, 5.7f, 8.7f, 3.1f, 2.1f},
-                new float[] {1.84f, 2.273f, 3.2f, 2.831f, 2.92f, 3.24f, 1.35f, 1.03f},
-                
-                // --------
-                // Features
-                
-                new float[] {3.3f, 4.4f, 5.5f, 6.71f, 6.93f, 4.168f, 9.779f, 6.182f, 7.59f, 2.167f, 7.042f, 10.791f, 5.313f, 7.997f, 5.654f, 9.27f, 3.1f},
-
-                // -------
-                // Results
-
-                new float[] {1.7f, 2.76f, 2.09f, 3.19f, 1.694f, 1.573f, 3.366f, 2.596f, 2.53f, 1.221f, 2.827f, 3.465f, 1.65f, 2.904f, 2.42f, 2.94f, 1.3f},
-            };
         }
     }
 }
