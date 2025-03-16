@@ -121,6 +121,7 @@ namespace JWTensorflowNET.BasicModels
 
             var test_X = np.array(req.GetValue<float[]>("Test_X"));
             var test_Y = np.array(req.GetValue<float[]>("Test_Y"));
+
             var testing_cost = sess.run(tf.reduce_sum(tf.pow(pred - Y, 2.0f)) / (2.0f * test_X.shape[0]), (X, test_X), (Y, test_Y));
 
             var diff = Math.Abs((float)training_cost - (float)testing_cost);

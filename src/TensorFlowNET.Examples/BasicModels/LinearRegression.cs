@@ -29,19 +29,19 @@ namespace TensorFlowNET.Examples
         public int training_epochs = 1000;
 
         // Parameters
+
         float learning_rate = 0.01f;
         int display_step = 50;
 
         NDArray train_X, train_Y;
         int n_samples;
 
-        public ExampleConfig InitConfig()
-            => Config = new ExampleConfig
-            {
-                Name = "Linear Regression (Graph)",
-                Enabled = true,
-                IsImportingGraph = false
-            };
+        public ExampleConfig InitConfig() => Config = new ExampleConfig
+        {
+            Name = "Linear Regression (Graph)",
+            Enabled = true,
+            IsImportingGraph = false
+        };
 
         public bool Run()
         {

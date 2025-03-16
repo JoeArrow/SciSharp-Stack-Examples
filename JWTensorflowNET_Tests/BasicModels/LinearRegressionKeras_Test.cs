@@ -34,8 +34,8 @@ namespace LinearRegressionKeras_Test
             // -------
             // Arrange
 
-            var input = JsonSerializer.Deserialize<float[]>(inputJson);
-            var output = JsonSerializer.Deserialize<float[]>(outputJson);
+            var input = JsonSerializer.Deserialize<float[]>(inputJson) ?? new float[] { 0.0f };
+            var output = JsonSerializer.Deserialize<float[]>(outputJson) ?? new float[] { 0.0f };
 
             var req = new Req();
 
