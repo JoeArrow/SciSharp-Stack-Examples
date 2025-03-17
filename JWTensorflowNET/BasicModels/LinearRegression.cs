@@ -80,17 +80,7 @@ namespace JWTensorflowNET.BasicModels
             // Note, minimize() knows to modify W and b
             // because Variable objects are trainable=True by default
 
-            //var optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost);
-
-            var grads_and_vars = tf.train.GradientDescentOptimizer(learning_rate).compute_gradients(cost);
-            //var clipped_grads = new List<(Tensor, RefVariable)>();
-            
-            foreach(var (grad, var) in grads_and_vars)
-            {
-                clipped_grads.Add(((Tensor, RefVariable))(tf.clip_by_value(grad, -1.0f, 1.0f), var));
-            }
-
-            var optimizer = tf.train.GradientDescentOptimizer(learning_rate).apply_gradients(clipped_grads);
+            var optimizer = tf.train.GradientDescentOptimizer(learning_rate).minimize(cost);
 
             // ----------------------------------------------------------
             // Initialize the variables (i.e. assign their default value)
@@ -159,7 +149,7 @@ namespace JWTensorflowNET.BasicModels
 
         // ------------------------------------------------
 
-        public override void PrepareData()
+        public override void PrepareData(IReq req = null)
         {
             //  Volume,   CPU,  Disk I/O
 
